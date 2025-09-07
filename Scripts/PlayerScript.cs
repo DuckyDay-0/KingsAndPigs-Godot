@@ -6,12 +6,14 @@ public partial class PlayerScript : CharacterBody2D
     private const int speed = 400;
     private const int jumpVelocity = -300;
     AnimatedSprite2D animatedSprite;
+    CollisionShape2D collisionShape;
     public bool isAttacking = false;
     private string currentAnimation = "";
     public override void _Ready()
     {
         animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D_Player");
         animatedSprite.AnimationFinished += OnAnimationFinished;
+        collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -56,14 +58,16 @@ public partial class PlayerScript : CharacterBody2D
                 }
             }
         }
-        //handles sprite flip
+        //handles sprite flip and hitbox
         if (direction > 0)
         {
             animatedSprite.FlipH = false;
+            collisionShape.Position = new Vector2(0, 0);
         }
         else if (direction < 0)
         {
             animatedSprite.FlipH = true;
+            collisionShape.Position = new Vector2(9, 0);
         }
 
 
