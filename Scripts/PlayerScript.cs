@@ -7,6 +7,8 @@ public partial class PlayerScript : CharacterBody2D
     private const int jumpVelocity = -300;
     AnimatedSprite2D animatedSprite;
     CollisionShape2D collisionShape;
+    CollisionShape2D collisionShapeAttack;
+    Area2D area;
     public bool isAttacking = false;
     private string currentAnimation = "";
     public override void _Ready()
@@ -14,6 +16,9 @@ public partial class PlayerScript : CharacterBody2D
         animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D_Player");
         animatedSprite.AnimationFinished += OnAnimationFinished;
         collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
+        collisionShapeAttack = GetNode<CollisionShape2D>("AttackArea2D/CollisionShape2D-AttackCollision");
+        area = GetNode<Area2D>("AttackArea2D");
+        area.BodyEntered += OnAttackHit;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -24,28 +29,21 @@ public partial class PlayerScript : CharacterBody2D
         //handles attack 
         if (Input.IsActionJustPressed("attack") && !isAttacking)
         {
-            GD.Print("attack");
-            isAttacking = true;
-            animatedSprite.Play("attackKingHuman");
+            Attack();
+        }
+        //handles gravity
+        if (!IsOnFloor())
+        {
+             velocity += GetGravity() * (float)delta;
         }
         if (!isAttacking)
         {
-            //handles gravity
-            if (!IsOnFloor())
-            {
-                velocity += GetGravity() * (float)delta;
-            }
-
             if (IsOnFloor() && Input.IsActionJustPressed("jump"))
             {
                 velocity.Y = jumpVelocity;
-                if (!isAttacking)
-                {
-                    animatedSprite.Play("jumpKingHuman");
-                }
+                animatedSprite.Play("jumpKingHuman");
             }
 
-            //handles run animation 
             if (IsOnFloor())
             {
                 if (direction == 0)
@@ -63,11 +61,13 @@ public partial class PlayerScript : CharacterBody2D
         {
             animatedSprite.FlipH = false;
             collisionShape.Position = new Vector2(0, 0);
+            collisionShapeAttack.Position = new Vector2(33, -6);
         }
         else if (direction < 0)
         {
             animatedSprite.FlipH = true;
             collisionShape.Position = new Vector2(9, 0);
+            collisionShapeAttack.Position = new Vector2(-23, -6);
         }
 
 
@@ -88,12 +88,29 @@ public partial class PlayerScript : CharacterBody2D
         MoveAndSlide();
     }
 
+    private void Attack()
+    {
+        GD.Print("attack");
+        isAttacking = true;
+        animatedSprite.Play("attackKingHuman");
+        collisionShapeAttack.Disabled = false;
+        //add timer for anti spaming the attack
+    }
+
     private void OnAnimationFinished()
     {
         if (animatedSprite.Animation == "attackKingHuman")
         { 
             isAttacking = false;
+            collisionShapeAttack.Disabled = true;
         }
+    }
 
+    private void OnAttackHit(Node body)
+    {
+        if (body is EnemyKingPigScript enemy)
+        {
+            enemy.TakeDamage(10);
+        }
     }
 }

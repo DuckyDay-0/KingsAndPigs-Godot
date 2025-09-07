@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://pv2o8p7su3pa"]
+[gd_scene load_steps=34 format=3 uid="uid://pv2o8p7su3pa"]
 
 [ext_resource type="Texture2D" uid="uid://chla2podmdf7o" path="res://Sprites/01-King Human/Attack (78x58).png" id="1_547gl"]
 [ext_resource type="Script" path="res://Scripts/PlayerScript.cs" id="1_n1qj5"]
@@ -7,17 +7,17 @@
 [ext_resource type="Texture2D" uid="uid://ckc4q8e5730kq" path="res://Sprites/01-King Human/Run (78x58).png" id="3_13bjj"]
 [ext_resource type="Texture2D" uid="uid://c2qc8ufghhqm3" path="res://Sprites/01-King Human/Jump (78x58).png" id="4_vct05"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_edms5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_11hta"]
 atlas = ExtResource("1_547gl")
-region = Rect2(0, 0, 78, 58)
+region = Rect2(156, 0, 78, 58)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_umr6e"]
 atlas = ExtResource("1_547gl")
 region = Rect2(78, 0, 78, 58)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_11hta"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_edms5"]
 atlas = ExtResource("1_547gl")
-region = Rect2(156, 0, 78, 58)
+region = Rect2(0, 0, 78, 58)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m3pf5"]
 atlas = ExtResource("3_0n44h")
@@ -107,17 +107,17 @@ region = Rect2(546, 0, 78, 58)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_edms5")
+"texture": SubResource("AtlasTexture_11hta")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_umr6e")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_11hta")
+"texture": SubResource("AtlasTexture_edms5")
 }],
 "loop": false,
 "name": &"attackKingHuman",
-"speed": 6.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -207,6 +207,9 @@ animations = [{
 radius = 28.2051
 height = 71.7949
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f17fv"]
+size = Vector2(21.75, 32.5)
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_n1qj5")
 
@@ -220,3 +223,10 @@ frame_progress = 1.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.39, 0.369)
 shape = SubResource("CapsuleShape2D_f5po4")
+
+[node name="AttackArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D-AttackCollision" type="CollisionShape2D" parent="AttackArea2D"]
+position = Vector2(33, -6)
+shape = SubResource("RectangleShape2D_f17fv")
+disabled = true

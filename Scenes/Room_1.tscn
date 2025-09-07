@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://vy1u110qq23f"]
+[gd_scene load_steps=6 format=3 uid="uid://vy1u110qq23f"]
 
 [ext_resource type="Texture2D" uid="uid://vwe5jeua7cda" path="res://Sprites/14-TileSets/Terrain (32x32).png" id="1_k6ob0"]
 [ext_resource type="PackedScene" uid="uid://pv2o8p7su3pa" path="res://Scenes/Player.tscn" id="2_wtnu6"]
+[ext_resource type="PackedScene" uid="uid://dc2kgwxju0vvn" path="res://Scenes/Enemy_KingPig.tscn" id="3_l3qcj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1c7r7"]
 texture = ExtResource("1_k6ob0")
@@ -477,3 +478,6 @@ position = Vector2(-6.99998, 0.999992)
 scale = Vector2(2.85364, 0.682916)
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
+
+[node name="Enemy_KingPig" parent="." instance=ExtResource("3_l3qcj")]
+position = Vector2(217, 168)
