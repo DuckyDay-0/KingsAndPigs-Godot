@@ -1,8 +1,30 @@
-[gd_scene load_steps=20 format=3 uid="uid://dc2kgwxju0vvn"]
+[gd_scene load_steps=34 format=3 uid="uid://dc2kgwxju0vvn"]
 
 [ext_resource type="Texture2D" uid="uid://dx7ovyft7fs8n" path="res://Sprites/02-King Pig/Idle (38x28).png" id="1_80u7a"]
 [ext_resource type="Script" path="res://Scripts/EnemyKingPigScript.cs" id="1_iqpet"]
 [ext_resource type="Texture2D" uid="uid://bsndxcc6kha6s" path="res://Sprites/02-King Pig/Hit (38x28).png" id="1_oh6eh"]
+[ext_resource type="Texture2D" uid="uid://87u7kbsvk2hx" path="res://Sprites/02-King Pig/Attack (38x28).png" id="2_4upbp"]
+[ext_resource type="Texture2D" uid="uid://d1yiy7xje62ew" path="res://Sprites/02-King Pig/Run (38x28).png" id="5_qlxu4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwdha"]
+atlas = ExtResource("2_4upbp")
+region = Rect2(0, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80ljl"]
+atlas = ExtResource("2_4upbp")
+region = Rect2(38, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rrtoj"]
+atlas = ExtResource("2_4upbp")
+region = Rect2(76, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4m7b"]
+atlas = ExtResource("2_4upbp")
+region = Rect2(114, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66hkm"]
+atlas = ExtResource("2_4upbp")
+region = Rect2(152, 0, 38, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gyp3e"]
 atlas = ExtResource("1_oh6eh")
@@ -60,8 +82,52 @@ region = Rect2(380, 0, 38, 28)
 atlas = ExtResource("1_80u7a")
 region = Rect2(418, 0, 38, 28)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_d521x"]
+atlas = ExtResource("5_qlxu4")
+region = Rect2(0, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cj72i"]
+atlas = ExtResource("5_qlxu4")
+region = Rect2(38, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mymye"]
+atlas = ExtResource("5_qlxu4")
+region = Rect2(76, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ygwje"]
+atlas = ExtResource("5_qlxu4")
+region = Rect2(114, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pgk1p"]
+atlas = ExtResource("5_qlxu4")
+region = Rect2(152, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fy1cr"]
+atlas = ExtResource("5_qlxu4")
+region = Rect2(190, 0, 38, 28)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_lrwus"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jwdha")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_80ljl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rrtoj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4m7b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66hkm")
+}],
+"loop": false,
+"name": &"attackKingPig",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gyp3e")
@@ -113,19 +179,55 @@ animations = [{
 "loop": true,
 "name": &"idleKingPig",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d521x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cj72i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mymye")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ygwje")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pgk1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fy1cr")
+}],
+"loop": true,
+"name": &"patrolKingPig",
+"speed": 6.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ri4lb"]
 size = Vector2(18, 21)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mb6pa"]
+size = Vector2(3, 14)
+
 [node name="Enemy_KingPig" type="CharacterBody2D"]
 script = ExtResource("1_iqpet")
 
 [node name="AnimatedSprite2D-Enemy" type="AnimatedSprite2D" parent="."]
-position = Vector2(0.015, 0)
+position = Vector2(0.5075, 0)
+scale = Vector2(0.974079, 1)
 sprite_frames = SubResource("SpriteFrames_lrwus")
-animation = &"hitKingPig"
+animation = &"idleKingPig"
+frame = 4
+frame_progress = 0.648104
 
 [node name="CollisionShape2D-Enemy" type="CollisionShape2D" parent="."]
-position = Vector2(1, 1)
+position = Vector2(1, 3)
 shape = SubResource("RectangleShape2D_ri4lb")
+
+[node name="AttackArea-Enemy" type="Area2D" parent="."]
+
+[node name="CollisionAttackShape2D-Enemy" type="CollisionShape2D" parent="AttackArea-Enemy"]
+position = Vector2(-15, -1)
+shape = SubResource("RectangleShape2D_mb6pa")
+disabled = true
