@@ -11,6 +11,8 @@ public partial class PlayerScript : CharacterBody2D
     Area2D area;
     public bool isAttacking = false;
     private string currentAnimation = "";
+
+
     public override void _Ready()
     {
         animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D_Player");
@@ -19,6 +21,8 @@ public partial class PlayerScript : CharacterBody2D
         collisionShapeAttack = GetNode<CollisionShape2D>("AttackArea2D/CollisionShape2D-AttackCollision");
         area = GetNode<Area2D>("AttackArea2D");
         area.BodyEntered += OnAttackHit;
+
+        Global.player = this;
     }
 
     public override void _PhysicsProcess(double delta)

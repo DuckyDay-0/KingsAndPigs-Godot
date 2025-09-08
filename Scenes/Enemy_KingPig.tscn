@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dc2kgwxju0vvn"]
+[gd_scene load_steps=41 format=3 uid="uid://dc2kgwxju0vvn"]
 
 [ext_resource type="Texture2D" uid="uid://dx7ovyft7fs8n" path="res://Sprites/02-King Pig/Idle (38x28).png" id="1_80u7a"]
 [ext_resource type="Script" path="res://Scripts/EnemyKingPigScript.cs" id="1_iqpet"]
@@ -106,6 +106,30 @@ region = Rect2(152, 0, 38, 28)
 atlas = ExtResource("5_qlxu4")
 region = Rect2(190, 0, 38, 28)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qghll"]
+atlas = ExtResource("5_qlxu4")
+region = Rect2(0, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdks8"]
+atlas = ExtResource("5_qlxu4")
+region = Rect2(38, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kfwls"]
+atlas = ExtResource("5_qlxu4")
+region = Rect2(76, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1lwnj"]
+atlas = ExtResource("5_qlxu4")
+region = Rect2(114, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_126lw"]
+atlas = ExtResource("5_qlxu4")
+region = Rect2(152, 0, 38, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_buk4b"]
+atlas = ExtResource("5_qlxu4")
+region = Rect2(190, 0, 38, 28)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_lrwus"]
 animations = [{
 "frames": [{
@@ -199,9 +223,32 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fy1cr")
 }],
-"loop": true,
+"loop": false,
 "name": &"patrolKingPig",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qghll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdks8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kfwls")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1lwnj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_126lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_buk4b")
+}],
+"loop": false,
+"name": &"runKingPig",
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ri4lb"]
@@ -210,6 +257,10 @@ size = Vector2(18, 21)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mb6pa"]
 size = Vector2(3, 14)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_awtub"]
+radius = 35.0
+height = 212.0
+
 [node name="Enemy_KingPig" type="CharacterBody2D"]
 script = ExtResource("1_iqpet")
 
@@ -217,9 +268,7 @@ script = ExtResource("1_iqpet")
 position = Vector2(0.5075, 0)
 scale = Vector2(0.974079, 1)
 sprite_frames = SubResource("SpriteFrames_lrwus")
-animation = &"idleKingPig"
-frame = 4
-frame_progress = 0.648104
+animation = &"patrolKingPig"
 
 [node name="CollisionShape2D-Enemy" type="CollisionShape2D" parent="."]
 position = Vector2(1, 3)
@@ -231,3 +280,10 @@ shape = SubResource("RectangleShape2D_ri4lb")
 position = Vector2(-15, -1)
 shape = SubResource("RectangleShape2D_mb6pa")
 disabled = true
+
+[node name="VisionArea-Enemy" type="Area2D" parent="."]
+
+[node name="VisionShape-Enemy" type="CollisionShape2D" parent="VisionArea-Enemy"]
+position = Vector2(-88, -21)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_awtub")
