@@ -11,7 +11,8 @@ public partial class EnemyKingPigScript : CharacterBody2D
         Idle,
         Patrol,
         Chase,
-        Attack
+        Attack,
+        Cooldown
     }
     public int health = 100;
     public EnemyState state = EnemyState.Idle;
@@ -21,10 +22,11 @@ public partial class EnemyKingPigScript : CharacterBody2D
     public float chaseSpeed = 200;
     public float visionRange = 300;
     public float attackRange = 50;
+    public bool isPlayerInVisionRange = false;
+    public bool canAttack = false;
+    public float attackCooldown = 1.0f;
 
     public Vector2 patrolDirection = Vector2.Left;
-    //public Node2D player;
-
 
     AnimatedSprite2D animatedSprite;
     Area2D attackArea;
@@ -38,6 +40,8 @@ public partial class EnemyKingPigScript : CharacterBody2D
 
         attackArea = GetNode<Area2D>("AttackArea-Enemy");
         collisionAttackShape = GetNode<CollisionShape2D>("AttackArea-Enemy/CollisionAttackShape2D-Enemy");
+        attackArea.BodyEntered += OnAttackAreaEntered;
+
 
         visionArea = GetNode<Area2D>("VisionArea-Enemy");
         visionShape = GetNode<CollisionShape2D>("VisionArea-Enemy/VisionShape-Enemy");
@@ -54,11 +58,6 @@ public partial class EnemyKingPigScript : CharacterBody2D
         {
             velocity += GetGravity() * (float)delta;
         }
-
-
-
-
-
 
         stateTimer -= (float)delta;
 
@@ -83,13 +82,11 @@ public partial class EnemyKingPigScript : CharacterBody2D
                 {
                     animatedSprite.FlipH = true;
                     collisionAttackShape.Position = new Vector2(15, -1);
-                    visionShape.Position = new Vector2(88, -21);
                 }
                 else
                 { 
                     animatedSprite.FlipH = false;
                     collisionAttackShape.Position = new Vector2(-15, -1);
-                    visionShape.Position = new Vector2(-88, -21);
                 }
 
                 if (stateTimer < 0)
@@ -101,17 +98,15 @@ public partial class EnemyKingPigScript : CharacterBody2D
 
             case EnemyState.Chase:
 
-                if (Global.player != null)
-                { 
+                if (Global.player != null && isPlayerInVisionRange)
+                {
                     float distance = GlobalPosition.DistanceTo(Global.player.GlobalPosition);
 
-                    if (distance > visionRange)
+
+                    if (distance < attackRange)
                     {
-                        ChangeState(EnemyState.Patrol, 2f);
-                    }
-                    else if (distance < attackRange)
-                    {
-                        ChangeState(EnemyState.Attack, 1f);
+                        canAttack = true;
+                        ChangeState(EnemyState.Attack, 0.5f);
                     }
                     else
                     {
@@ -122,10 +117,45 @@ public partial class EnemyKingPigScript : CharacterBody2D
                         animatedSprite.FlipH = chaseDirection > 0;
 
                         collisionAttackShape.Position = new Vector2(chaseDirection > 0 ? 15 : -15, -1);
+
                     }
+
+                }
+                else
+                {
+                    ChangeState(EnemyState.Patrol, 2f);
                 }
                 break;
 
+
+            case EnemyState.Attack:
+
+                if (canAttack)
+                {
+                    canAttack = false;
+                    animatedSprite.Play("attackKingPig");
+                    GD.Print("About to attack");
+                    collisionAttackShape.SetDeferred("disabled", false);
+                }
+
+
+                if (stateTimer < 0)
+                {
+                    collisionAttackShape.SetDeferred("disabled", true);
+                    ChangeState(EnemyState.Cooldown, attackCooldown);
+                }
+                break;
+
+            case EnemyState.Cooldown:
+                velocity.X = 0;
+                animatedSprite.Play("idleKingPig");
+                if (stateTimer < 0)
+                {
+                    ChangeState(isPlayerInVisionRange ? EnemyState.Chase : EnemyState.Idle, 1f);
+                }
+
+
+                break;
 
 
         }
@@ -147,10 +177,20 @@ public partial class EnemyKingPigScript : CharacterBody2D
         stateTimer = duration;
     }
 
+    private void OnAttackAreaEntered(Node2D body)
+    {
+        if (body is PlayerScript player && !collisionAttackShape.Disabled)
+        {
+            player.TakeDamage();
+            GD.Print("OnAttackAreaEntered");
+        }
+    }
+
     private void OnVisionEntered(Node2D body)
     {
-        if (body is PlayerScript player )
+        if (body is PlayerScript player)
         {
+            isPlayerInVisionRange = true;
             GD.Print("Chase/Spotted");
             ChangeState(EnemyState.Chase);
         }
@@ -160,8 +200,10 @@ public partial class EnemyKingPigScript : CharacterBody2D
     {
         if (body is PlayerScript player)
         {
+            isPlayerInVisionRange = false;
             GD.Print("Out of sight");
-            ChangeState(EnemyState.Patrol, 2f);
+            ChangeState(EnemyState.Idle, 3f);
+            collisionAttackShape.SetDeferred("disabled", true);
         }
     }
 }

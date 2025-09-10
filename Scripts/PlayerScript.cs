@@ -109,6 +109,10 @@ public partial class PlayerScript : CharacterBody2D
             collisionShapeAttack.Disabled = true;
         }
     }
+    public void TakeDamage()
+    {
+        GD.Print("Ouch");
+    }
 
     private void OnAttackHit(Node body)
     {

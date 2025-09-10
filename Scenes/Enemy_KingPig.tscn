@@ -257,9 +257,8 @@ size = Vector2(18, 21)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mb6pa"]
 size = Vector2(3, 14)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_awtub"]
-radius = 35.0
-height = 212.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_wme36"]
+radius = 103.233
 
 [node name="Enemy_KingPig" type="CharacterBody2D"]
 script = ExtResource("1_iqpet")
@@ -268,7 +267,9 @@ script = ExtResource("1_iqpet")
 position = Vector2(0.5075, 0)
 scale = Vector2(0.974079, 1)
 sprite_frames = SubResource("SpriteFrames_lrwus")
-animation = &"patrolKingPig"
+animation = &"attackKingPig"
+frame = 4
+frame_progress = 1.0
 
 [node name="CollisionShape2D-Enemy" type="CollisionShape2D" parent="."]
 position = Vector2(1, 3)
@@ -284,6 +285,6 @@ disabled = true
 [node name="VisionArea-Enemy" type="Area2D" parent="."]
 
 [node name="VisionShape-Enemy" type="CollisionShape2D" parent="VisionArea-Enemy"]
-position = Vector2(-88, -21)
+position = Vector2(0, 1)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_awtub")
+shape = SubResource("CircleShape2D_wme36")
