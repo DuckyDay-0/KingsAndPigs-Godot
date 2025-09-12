@@ -1,7 +1,7 @@
 [gd_scene load_steps=34 format=3 uid="uid://pv2o8p7su3pa"]
 
 [ext_resource type="Texture2D" uid="uid://chla2podmdf7o" path="res://Sprites/01-King Human/Attack (78x58).png" id="1_547gl"]
-[ext_resource type="Script" path="res://Scripts/PlayerScript.cs" id="1_n1qj5"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerScript.cs" id="1_n1qj5"]
 [ext_resource type="Texture2D" uid="uid://dosk3ldbane8t" path="res://Sprites/01-King Human/Idle (78x58).png" id="2_gex1n"]
 [ext_resource type="Texture2D" uid="uid://dwnyrksn26ant" path="res://Sprites/01-King Human/Fall (78x58).png" id="3_0n44h"]
 [ext_resource type="Texture2D" uid="uid://ckc4q8e5730kq" path="res://Sprites/01-King Human/Run (78x58).png" id="3_13bjj"]

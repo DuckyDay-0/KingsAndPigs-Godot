@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class PlayerScript : CharacterBody2D
+public partial class PlayerScript : CharacterBody2D,  IPlayer
 {
     private const int speed = 400;
     private const int jumpVelocity = -300;
@@ -11,7 +11,6 @@ public partial class PlayerScript : CharacterBody2D
     Area2D area;
     public bool isAttacking = false;
     private string currentAnimation = "";
-
 
     public override void _Ready()
     {
@@ -23,6 +22,7 @@ public partial class PlayerScript : CharacterBody2D
         area.BodyEntered += OnAttackHit;
 
         Global.player = this;
+
     }
 
     public override void _PhysicsProcess(double delta)
@@ -38,7 +38,7 @@ public partial class PlayerScript : CharacterBody2D
         //handles gravity
         if (!IsOnFloor())
         {
-             velocity += GetGravity() * (float)delta;
+            velocity += GetGravity() * (float)delta;
         }
         if (!isAttacking)
         {
@@ -118,7 +118,7 @@ public partial class PlayerScript : CharacterBody2D
     {
         if (body is EnemyKingPigScript enemy)
         {
-            enemy.TakeDamage(10);
+            enemy.TakeDamage(50);
         }
     }
 }

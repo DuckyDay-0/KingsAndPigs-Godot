@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cr1av3yp37mvj"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy/EnemyPig.cs" id="1_hub2i"]
+[ext_resource type="PackedScene" uid="uid://dc00fyl8hkrsi" path="res://Scenes/AnimationHandler.tscn" id="2_axpa7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g5huj"]
+size = Vector2(18, 17)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_hub2i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, 5.5)
+shape = SubResource("RectangleShape2D_g5huj")
+
+[node name="AnimationHandler" parent="." instance=ExtResource("2_axpa7")]
+animation = &"runKingPig"
+frame_progress = 0.0
+AnimationPrefix = "Standard"

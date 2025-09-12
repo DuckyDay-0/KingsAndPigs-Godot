@@ -1,23 +1,10 @@
 using Godot;
 using System;
 
-public partial class EnemyKingPigScript : CharacterBody2D
+public partial class EnemyKingPigScript : CharacterBody2D, IEnemy
 {
 
- 
-
-    public enum EnemyState
-    { 
-        Idle,
-        Patrol,
-        Chase,
-        Attack,
-        Cooldown
-    }
     public int health = 100;
-    public EnemyState state = EnemyState.Idle;
-    public float stateTimer = 0f;
-
     public float patrolSpeed = 100;
     public float chaseSpeed = 200;
     public float visionRange = 300;
@@ -28,25 +15,36 @@ public partial class EnemyKingPigScript : CharacterBody2D
 
     public Vector2 patrolDirection = Vector2.Left;
 
-    AnimatedSprite2D animatedSprite;
-    Area2D attackArea;
-    CollisionShape2D collisionAttackShape;
-    Area2D visionArea;
-    CollisionShape2D visionShape;
+    private EnemyStateMachine fsm;
+    //private AnimatedSprite2D animatedSprite;
+    private Area2D attackArea;
+    private CollisionShape2D collisionAttackShape;
+    private Area2D visionArea;
+    private CollisionShape2D visionShape;
+    private CollisionShape2D collisionShapeEnemy;
+
+    EnemyAnimationHandler animationHandler;
+
+    
 
     public override void _Ready()
     {
-        animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D-Enemy");
+        //animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D-Enemy");
 
         attackArea = GetNode<Area2D>("AttackArea-Enemy");
         collisionAttackShape = GetNode<CollisionShape2D>("AttackArea-Enemy/CollisionAttackShape2D-Enemy");
+        collisionShapeEnemy = GetNode<CollisionShape2D>("CollisionShape2D-Enemy");
         attackArea.BodyEntered += OnAttackAreaEntered;
-
 
         visionArea = GetNode<Area2D>("VisionArea-Enemy");
         visionShape = GetNode<CollisionShape2D>("VisionArea-Enemy/VisionShape-Enemy");
         visionArea.BodyEntered += OnVisionEntered;
         visionArea.BodyExited += OnVisionExited;
+
+        fsm = new EnemyStateMachine();
+        animationHandler = GetNode<EnemyAnimationHandler>("AnimationHandler");
+        //animationHandler.AnimationFinished += OnAnimationFinished;
+        animationHandler.AnimationFinished += OnAnimationFinished;
     }
 
 
@@ -59,44 +57,44 @@ public partial class EnemyKingPigScript : CharacterBody2D
             velocity += GetGravity() * (float)delta;
         }
 
-        stateTimer -= (float)delta;
+        fsm.Update((float)delta);
 
-        switch (state)
+        switch (fsm.CurrentState)
         {
-            case EnemyState.Idle:
+            case EnemyStateMachine.EnemyState.Idle:
                 velocity.X = 0;
-                animatedSprite.Play("idleKingPig");
-                if (stateTimer < 0)
+                animationHandler.IdleAnimation();
+                if (fsm.IsStateFinished())
                 {
-                    ChangeState(EnemyState.Patrol, 2f);
+                   fsm.ChangeState(EnemyStateMachine.EnemyState.Patrol, 2f);
                 }
                 break;
 
-            case EnemyState.Patrol:
+            case EnemyStateMachine.EnemyState.Patrol:
                 velocity.X = patrolDirection.X * patrolSpeed;
-                animatedSprite.Play("patrolKingPig");
 
-                animatedSprite.FlipH = patrolDirection.X > 0;
+                animationHandler.PatrolAnimation();
 
+                animationHandler.FlipH = patrolDirection.X > 0;
                 if (patrolDirection == Vector2.Right)
                 {
-                    animatedSprite.FlipH = true;
+                    animationHandler.FlipH = true;
                     collisionAttackShape.Position = new Vector2(15, -1);
                 }
                 else
-                { 
-                    animatedSprite.FlipH = false;
+                {
+                    animationHandler.FlipH = false;
                     collisionAttackShape.Position = new Vector2(-15, -1);
                 }
 
-                if (stateTimer < 0)
+                if (fsm.IsStateFinished())
                 {
                     patrolDirection.X *= -1;
-                    ChangeState(EnemyState.Idle, 5f);
+                    fsm.ChangeState(EnemyStateMachine.EnemyState.Idle, 5f);
                 }
                 break;
 
-            case EnemyState.Chase:
+            case EnemyStateMachine.EnemyState.Chase:
 
                 if (Global.player != null && isPlayerInVisionRange)
                 {
@@ -106,15 +104,16 @@ public partial class EnemyKingPigScript : CharacterBody2D
                     if (distance < attackRange)
                     {
                         canAttack = true;
-                        ChangeState(EnemyState.Attack, 0.5f);
+                        fsm.ChangeState(EnemyStateMachine.EnemyState.Attack, 0.5f);
                     }
                     else
                     {
                         float chaseDirection = Math.Sign(Global.player.GlobalPosition.X - GlobalPosition.X);
 
                         velocity.X = chaseDirection * chaseSpeed;
-                        animatedSprite.Play("runKingPig");
-                        animatedSprite.FlipH = chaseDirection > 0;
+
+                        animationHandler.RunAnimation();
+                        animationHandler.FlipH = chaseDirection > 0;
 
                         collisionAttackShape.Position = new Vector2(chaseDirection > 0 ? 15 : -15, -1);
 
@@ -123,35 +122,38 @@ public partial class EnemyKingPigScript : CharacterBody2D
                 }
                 else
                 {
-                    ChangeState(EnemyState.Patrol, 2f);
+                    fsm.ChangeState(EnemyStateMachine.EnemyState.Patrol, 2f);
                 }
                 break;
 
 
-            case EnemyState.Attack:
+            case EnemyStateMachine.EnemyState.Attack:
 
                 if (canAttack)
                 {
                     canAttack = false;
-                    animatedSprite.Play("attackKingPig");
+
+                    animationHandler.AttackAnimation();
                     GD.Print("About to attack");
                     collisionAttackShape.SetDeferred("disabled", false);
                 }
 
 
-                if (stateTimer < 0)
+                if (fsm.IsStateFinished())
                 {
                     collisionAttackShape.SetDeferred("disabled", true);
-                    ChangeState(EnemyState.Cooldown, attackCooldown);
+                    fsm.ChangeState(EnemyStateMachine.EnemyState.Cooldown, attackCooldown);
                 }
                 break;
 
-            case EnemyState.Cooldown:
+            case EnemyStateMachine.EnemyState.Cooldown:
                 velocity.X = 0;
-                animatedSprite.Play("idleKingPig");
-                if (stateTimer < 0)
+                //animatedSprite.Play("idleKingPig");
+
+                animationHandler.IdleAnimation();
+                if (fsm.IsStateFinished())
                 {
-                    ChangeState(isPlayerInVisionRange ? EnemyState.Chase : EnemyState.Idle, 1f);
+                    fsm.ChangeState(isPlayerInVisionRange ? EnemyStateMachine.EnemyState.Chase : EnemyStateMachine.EnemyState.Idle, 1f);
                 }
 
 
@@ -159,29 +161,46 @@ public partial class EnemyKingPigScript : CharacterBody2D
 
 
         }
+
+        if (health <= 0)
+        {
+            Die();    
+        }
         Velocity = velocity;
 
         MoveAndSlide();
     }
 
-    public void TakeDamage(int damage)
+
+    public void Die()
     {
-        health -= damage;
-        animatedSprite.Play("hitKingPig");
-        GD.Print(health);
+        animationHandler.DieAnimation();
+
     }
 
-    private void ChangeState(EnemyState newState, float duration = 0)
+    public void OnAnimationFinished()
     {
-        state = newState;
-        stateTimer = duration;
+        GD.Print("Animation Finished");
+        if (animationHandler.Animation == "deadKingPig")
+        {
+            GD.Print("Animation Finished 2");
+
+            QueueFree();
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {        
+        health -= damage;
+        animationHandler.HitAnimation();
+        GD.Print(health);        
     }
 
     private void OnAttackAreaEntered(Node2D body)
     {
-        if (body is PlayerScript player && !collisionAttackShape.Disabled)
+        if (body is IPlayer player && !collisionAttackShape.Disabled)
         {
-            player.TakeDamage();
+            Attack(player);
             GD.Print("OnAttackAreaEntered");
         }
     }
@@ -192,8 +211,13 @@ public partial class EnemyKingPigScript : CharacterBody2D
         {
             isPlayerInVisionRange = true;
             GD.Print("Chase/Spotted");
-            ChangeState(EnemyState.Chase);
+            fsm.ChangeState(EnemyStateMachine.EnemyState.Chase);
         }
+    }
+
+    public void Attack(IPlayer player)
+    {
+        player.TakeDamage();
     }
 
     private void OnVisionExited(Node2D body) 
@@ -202,7 +226,7 @@ public partial class EnemyKingPigScript : CharacterBody2D
         {
             isPlayerInVisionRange = false;
             GD.Print("Out of sight");
-            ChangeState(EnemyState.Idle, 3f);
+            fsm.ChangeState(EnemyStateMachine.EnemyState.Idle, 3f);
             collisionAttackShape.SetDeferred("disabled", true);
         }
     }

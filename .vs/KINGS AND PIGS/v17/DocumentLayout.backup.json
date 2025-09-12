@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|c:\\godot\\kings and pigs\\kings and pigs\\kings and pigs project\\kings-and-pigs\\scripts\\enemykingpigscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|solutionrelative:scripts\\enemykingpigscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|c:\\godot\\kings and pigs\\kings and pigs\\kings and pigs project\\kings-and-pigs\\scripts\\enemy\\enemykingpigscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|solutionrelative:scripts\\enemy\\enemykingpigscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|c:\\godot\\kings and pigs\\kings and pigs\\kings and pigs project\\kings-and-pigs\\scripts\\playerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|solutionrelative:scripts\\playerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|c:\\godot\\kings and pigs\\kings and pigs\\kings and pigs project\\kings-and-pigs\\scripts\\enemy\\ienemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|solutionrelative:scripts\\enemy\\ienemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|c:\\godot\\kings and pigs\\kings and pigs\\kings and pigs project\\kings-and-pigs\\scripts\\player\\playerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|solutionrelative:scripts\\player\\playerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|c:\\godot\\kings and pigs\\kings and pigs\\kings and pigs project\\kings-and-pigs\\scripts\\player\\iplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|solutionrelative:scripts\\player\\iplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C1D2897E-D43B-4E97-B748-8C5FDB76D7F5}|Kings and Pigs.csproj|c:\\godot\\kings and pigs\\kings and pigs\\kings and pigs project\\kings-and-pigs\\scripts\\global.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +38,59 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IEnemy.cs",
+              "DocumentMoniker": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\Enemy\\IEnemy.cs",
+              "RelativeDocumentMoniker": "Scripts\\Enemy\\IEnemy.cs",
+              "ToolTip": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\Enemy\\IEnemy.cs",
+              "RelativeToolTip": "Scripts\\Enemy\\IEnemy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-11T19:21:48.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EnemyKingPigScript.cs",
+              "DocumentMoniker": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\Enemy\\EnemyKingPigScript.cs",
+              "RelativeDocumentMoniker": "Scripts\\Enemy\\EnemyKingPigScript.cs",
+              "ToolTip": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\Enemy\\EnemyKingPigScript.cs",
+              "RelativeToolTip": "Scripts\\Enemy\\EnemyKingPigScript.cs",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAwwK8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-11T19:21:31.831Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IPlayer.cs",
+              "DocumentMoniker": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\Player\\IPlayer.cs",
+              "RelativeDocumentMoniker": "Scripts\\Player\\IPlayer.cs",
+              "ToolTip": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\Player\\IPlayer.cs",
+              "RelativeToolTip": "Scripts\\Player\\IPlayer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-11T19:18:57.73Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "PlayerScript.cs",
+              "DocumentMoniker": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\Player\\PlayerScript.cs",
+              "RelativeDocumentMoniker": "Scripts\\Player\\PlayerScript.cs",
+              "ToolTip": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\Player\\PlayerScript.cs",
+              "RelativeToolTip": "Scripts\\Player\\PlayerScript.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAowCQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-10T20:01:19.674Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Global.cs",
               "DocumentMoniker": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\Global.cs",
               "RelativeDocumentMoniker": "Scripts\\Global.cs",
@@ -38,32 +98,7 @@
               "RelativeToolTip": "Scripts\\Global.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-08T15:06:00.211Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EnemyKingPigScript.cs",
-              "DocumentMoniker": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\EnemyKingPigScript.cs",
-              "RelativeDocumentMoniker": "Scripts\\EnemyKingPigScript.cs",
-              "ToolTip": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\EnemyKingPigScript.cs",
-              "RelativeToolTip": "Scripts\\EnemyKingPigScript.cs",
-              "ViewState": "AgIAAJoAAAAAAAAAAAAUwNMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-07T19:58:19.654Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PlayerScript.cs",
-              "DocumentMoniker": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\PlayerScript.cs",
-              "RelativeDocumentMoniker": "Scripts\\PlayerScript.cs",
-              "ToolTip": "C:\\Godot\\Kings and Pigs\\Kings and Pigs\\Kings and Pigs Project\\kings-and-pigs\\Scripts\\PlayerScript.cs",
-              "RelativeToolTip": "Scripts\\PlayerScript.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAowHEAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-12T23:17:34.899Z",
+              "WhenOpened": "2025-09-08T15:06:00.211Z",
               "EditorCaption": ""
             }
           ]
